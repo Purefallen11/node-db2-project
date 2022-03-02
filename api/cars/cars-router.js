@@ -1,5 +1,5 @@
 const express = require('express')
-const {checkCarId} = require('./cars-middleware')
+const {checkCarId,checkCarPayload} = require('./cars-middleware')
 const carsModel = require('./cars-model')
 
 const router = express.Router()
@@ -15,6 +15,12 @@ router.get('/',async (req, res, next) => {
 
 router.get('/:id', checkCarId, (req, res, next) => {
     res.status(200).json(req.cars)
+    next()
+})
+
+router.post('/',checkCarPayload, (req, res, next) => {
+    res.status(200).json(req.newCar)
+    next()
 })
 
 
